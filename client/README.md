@@ -17,10 +17,11 @@ A modern, responsive React-based task management application with role-based acc
 - **Framework**: React 19 (Vite)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
 - **Icons**: Lucide React
 - **Forms**: React Hook Form + Zod
 - **Networking**: Axios
-- **Testing**: Vitest + React Testing Library
+- **Testing**: Vitest + React Testing Library + JSDOM
 
 ## 📦 Setup Instructions
 
@@ -45,10 +46,10 @@ A modern, responsive React-based task management application with role-based acc
 
 ## 🧪 Testing
 
-The project includes:
-- **Component Tests**: `TaskCard.test.tsx` (Validates UI rendering and logic).
-- **Page Tests**: `Login.test.tsx` (Ensures form accessibility and initial state).
-- **Integration Configuration**: Ready for API mocking using Vitest.
+The project includes a robust test suite covering multiple layers:
+- **Unit Tests**: `TaskCard.test.tsx`, `Login.test.tsx` (Validates rendering and interactions).
+- **Integration Test**: `api.test.tsx` (Ensures the Dashboard correctly fetches and displays data from the API).
+- **Configuration**: Uses `vitest` with `jsdom` and `@testing-library/jest-dom` for reliable DOM assertions.
 
 ---
 *Built as a hiring evaluation assignment.*
