@@ -92,16 +92,34 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
     try {
         const { id } = req.params;
         const { userId, role } = req.user!;
-        const { title, description, status } = z.object({
+        const { title, description, status, assignedUserIds } = z.object({
             title: z.string().optional(),
             description: z.string().optional(),
-            status: z.enum(['pending', 'completed']).optional()
+            status: z.enum(['pending', 'completed']).optional(),
+            assignedUserIds: z.array(z.number()).optional()
         }).parse(req.body);
 
         if (role === 'admin') {
+            const updateData: any = { title, description };
+            
+            // Handle reassignment if assignedUserIds is provided
+            if (assignedUserIds) {
+                // Delete existing assignments for this task
+                await prisma.taskAssignment.deleteMany({
+                    where: { taskId: Number(id) }
+                });
+
+                // Create new assignments
+                updateData.assignments = {
+                    create: assignedUserIds.map(userId => ({
+                        userId
+                    }))
+                };
+            }
+
             const updatedTask = await prisma.task.update({
                 where: { id: Number(id) },
-                data: { title, description },
+                data: updateData,
                 include: {
                     creator: { select: { name: true } },
                     assignments: {

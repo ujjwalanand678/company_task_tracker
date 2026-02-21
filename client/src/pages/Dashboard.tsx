@@ -60,8 +60,10 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleUpdateTask = async (data: any, taskId?: number) => {
-    const id = taskId || editingTask?.id;
+  const handleUpdateTask = async (data: any, taskId?: any) => {
+    // If taskId is a number, use it (from UserDashboard toggle)
+    // Otherwise use editingTask.id (from TaskModal submit)
+    const id = typeof taskId === 'number' ? taskId : editingTask?.id;
     if (!id) return;
     
     setModalLoading(true);
