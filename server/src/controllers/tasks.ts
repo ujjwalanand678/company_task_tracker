@@ -6,20 +6,32 @@ import { z } from 'zod';
 const taskSchema = z.object({
     title: z.string().min(1),
     description: z.string().optional(),
-    status: z.enum(['pending', 'completed']).optional()
+    assignedUserIds: z.array(z.number()).min(1, "At least one user must be assigned")
 });
 
 export const createTask = async (req: AuthRequest, res: Response) => {
     try {
-        const { title, description, status } = taskSchema.parse(req.body);
-        const userId = req.user!.userId;
+        const { role } = req.user!;
+        if (role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied. Only admins can create tasks.' });
+        }
+
+        const { title, description, assignedUserIds } = taskSchema.parse(req.body);
 
         const task = await prisma.task.create({
             data: {
                 title,
                 description,
-                status: status || 'pending',
-                userId
+                assignments: {
+                    create: assignedUserIds.map(userId => ({
+                        userId
+                    }))
+                }
+            },
+            include: {
+                assignments: {
+                    include: { user: { select: { email: true } } }
+                }
             }
         });
 
@@ -36,18 +48,34 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
     try {
         const { userId, role } = req.user!;
 
-        let tasks;
         if (role === 'admin') {
-            tasks = await prisma.task.findMany({
-                include: { user: { select: { email: true } } }
+            const tasks = await prisma.task.findMany({
+                include: { 
+                    assignments: { 
+                        include: { user: { select: { email: true } } } 
+                    } 
+                },
+                orderBy: { created_at: 'desc' }
             });
+            return res.json(tasks);
         } else {
-            tasks = await prisma.task.findMany({
-                where: { userId }
+            // For regular users, we return their specific assignments with task details
+            const assignments = await prisma.taskAssignment.findMany({
+                where: { userId },
+                include: { task: true },
+                orderBy: { createdAt: 'desc' }
             });
+            
+            // Map to a format the frontend expects (or adjust frontend)
+            // Let's return the task object with an additional 'userStatus' field
+            const tasks = assignments.map(a => ({
+                ...a.task,
+                status: a.status, // Individual status
+                assignmentId: a.id
+            }));
+            
+            return res.json(tasks);
         }
-
-        res.json(tasks);
     } catch (error: any) {
         res.status(500).json({ message: 'Internal server error', error: error.message });
     }
@@ -56,25 +84,42 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
 export const updateTask = async (req: AuthRequest, res: Response) => {
     try {
         const { id } = req.params;
-        const { title, description, status } = taskSchema.partial().parse(req.body);
         const { userId, role } = req.user!;
+        const { title, description, status } = z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            status: z.enum(['pending', 'completed']).optional()
+        }).parse(req.body);
 
-        const task = await prisma.task.findUnique({ where: { id: Number(id) } });
+        if (role === 'admin') {
+            const updatedTask = await prisma.task.update({
+                where: { id: Number(id) },
+                data: { title, description },
+                include: {
+                    assignments: {
+                        include: { user: { select: { email: true } } }
+                    }
+                }
+            });
+            return res.json(updatedTask);
+        } else {
+            // Regular user updates their assignment status
+            // The 'id' in the URL for a user might be the Task ID, but they update the Assignment
+            const assignment = await prisma.taskAssignment.findFirst({
+                where: { taskId: Number(id), userId }
+            });
 
-        if (!task) {
-            return res.status(404).json({ message: 'Task not found' });
+            if (!assignment) {
+                return res.status(404).json({ message: 'Assignment not found' });
+            }
+
+            const updatedAssignment = await prisma.taskAssignment.update({
+                where: { id: assignment.id },
+                data: { status: status || 'pending' }
+            });
+
+            return res.json(updatedAssignment);
         }
-
-        if (role !== 'admin' && task.userId !== userId) {
-            return res.status(403).json({ message: 'Access denied. You can only update your own tasks.' });
-        }
-
-        const updatedTask = await prisma.task.update({
-            where: { id: Number(id) },
-            data: { title, description, status }
-        });
-
-        res.json(updatedTask);
     } catch (error: any) {
         if (error instanceof z.ZodError) {
             return res.status(400).json({ message: 'Validation error', errors: error.issues });
@@ -94,8 +139,8 @@ export const deleteTask = async (req: AuthRequest, res: Response) => {
             return res.status(404).json({ message: 'Task not found' });
         }
 
-        if (role !== 'admin' && task.userId !== userId) {
-            return res.status(403).json({ message: 'Access denied. You can only delete your own tasks.' });
+        if (role !== 'admin') {
+            return res.status(403).json({ message: 'Access denied. Only admins can delete tasks.' });
         }
 
         await prisma.task.delete({ where: { id: Number(id) } });

@@ -6,7 +6,7 @@ import { Clock, CheckCircle2, Trash2, Edit3, User as UserIcon } from 'lucide-rea
 interface TaskCardProps {
   task: Task;
   onEdit: (task: Task) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
   isAdminView?: boolean;
 }
 
@@ -15,11 +15,11 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete, isAdminView
 
   return (
     <motion.div 
-      whileHover={{ y: -8, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={{ y: -6, scale: 1.01 }}
+      whileTap={{ scale: 0.99 }}
       className={`
-        group glass-card rounded-[2.5rem] p-8 transition-all duration-500 relative overflow-hidden
-        ${isCompleted ? 'opacity-80' : 'shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)]'}
+        group glass-card rounded-[1.5rem] p-6 transition-all duration-500 relative overflow-hidden
+        ${isCompleted ? 'opacity-80' : 'shadow-[0_24px_48px_-12px_rgba(0,0,0,0.08)]'}
       `}
     >
       {/* Decorative background element */}
@@ -34,42 +34,60 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete, isAdminView
 
       <div className="flex items-start justify-between mb-5 relative z-10">
         <span className={`
-          px-3.5 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2
+          px-3 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest flex items-center gap-1.5
           ${isCompleted 
-            ? 'bg-green-500/10 text-green-500 border border-green-500/20' 
-            : 'bg-primary-500/10 text-primary-500 border border-primary-500/20'}
+            ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
+            : 'bg-blue-50 text-blue-600 border border-blue-100'}
         `}>
-          {isCompleted ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
+          {isCompleted ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
           {task.status}
         </span>
         
-        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => onEdit(task)}
-            className="p-3 bg-[var(--background)] border border-[var(--card-border)] text-[var(--foreground)] opacity-70 hover:opacity-100 hover:text-primary-500 hover:border-primary-500/50 rounded-xl transition-all shadow-lg backdrop-blur-md"
-            title="Refine mission"
-          >
-            <Edit3 className="w-3.5 h-3.5" />
-          </motion.button>
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => onDelete(task.id)}
-            className="p-3 bg-[var(--background)] border border-[var(--card-border)] text-red-500 opacity-70 hover:opacity-100 hover:bg-red-500/10 hover:border-red-500/50 rounded-xl transition-all shadow-lg backdrop-blur-md"
-            title="Terminate link"
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-          </motion.button>
+        <div className="flex items-center gap-2 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+          {isAdminView ? (
+            <>
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => onEdit(task)}
+                className="p-2.5 bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-500/50 rounded-xl transition-all shadow-sm"
+                title="Edit Task"
+              >
+                <Edit3 className="w-3 h-3" />
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => onDelete(task.id)}
+                className="p-2.5 bg-[var(--background)] border border-[var(--card-border)] text-red-500 opacity-70 hover:opacity-100 hover:bg-red-500/10 hover:border-red-500/50 rounded-lg transition-all shadow-lg backdrop-blur-md"
+                title="Delete Task"
+              >
+                <Trash2 className="w-3 h-3" />
+              </motion.button>
+            </>
+          ) : (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onEdit({ ...task, status: isCompleted ? 'pending' : 'completed' })}
+              className={`
+                px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all shadow-sm
+                ${isCompleted 
+                  ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' 
+                  : 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20'}
+              `}
+            >
+              {isCompleted ? 'Mark Pending' : 'Mark Complete'}
+            </motion.button>
+          )}
         </div>
       </div>
 
-      <h3 className={`text-xl font-black mb-3 leading-tight tracking-tight transition-all font-['Outfit'] ${isCompleted ? 'text-[var(--foreground)] opacity-40 line-through' : 'text-[var(--foreground)]'}`}>
+      <h3 className={`text-lg font-black mb-2 leading-tight tracking-tight transition-all font-['Outfit'] ${isCompleted ? 'text-[var(--foreground)] opacity-40 line-through' : 'text-[var(--foreground)]'}`}>
         {task.title}
       </h3>
       
-      <p className={`text-sm mb-8 line-clamp-3 leading-relaxed font-medium transition-all ${isCompleted ? 'text-[var(--foreground)] opacity-30' : 'text-[var(--foreground)] opacity-50'}`}>
+      <p className={`text-[13px] mb-6 line-clamp-3 leading-relaxed font-medium transition-all ${isCompleted ? 'text-[var(--fg-muted)] line-through opacity-60' : 'text-[var(--fg-secondary)]'}`}>
         {task.description}
       </p>
 
@@ -80,9 +98,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete, isAdminView
               <UserIcon className="w-4 h-4" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-black text-[var(--foreground)] opacity-20 uppercase tracking-[0.1em]">Assigned To</span>
-              <span className="text-xs font-black text-[var(--foreground)] opacity-60 uppercase tracking-tighter">
-                {isAdminView ? `Asset_${task.userId.toString().substring(0, 4)}` : 'Initiator'}
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Assignee</span>
+              <span className="text-xs font-bold text-slate-600 uppercase">
+                {isAdminView ? (task.user?.email || `User_${task.userId.toString().substring(0, 4)}`) : 'Assigned to Me'}
               </span>
             </div>
           </div>

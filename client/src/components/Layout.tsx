@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, PlusCircle, CheckCircle, Search, Menu, X, User as UserIcon, Shield, LogOut, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, CheckCircle, Search, Menu, X, User as UserIcon, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { Link, useLocation } from 'react-router-dom';
 
 interface LayoutProps {
@@ -11,7 +10,6 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -22,36 +20,31 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col md:flex-row">
       {/* Mobile Header */}
-      <header className="md:hidden bg-[var(--card-bg)] border-b border-[var(--card-border)] p-4 flex items-center justify-between sticky top-0 z-50 backdrop-blur-md bg-opacity-80">
+      <header className="md:hidden bg-white border-b border-slate-200 p-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <CheckCircle className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight">TaskFlow</span>
         </div>
-        <div className="flex items-center gap-4">
-          <button onClick={toggleTheme} className="p-2 rounded-xl bg-[var(--background)] border border-[var(--card-border)] text-[var(--foreground)] transition-all active:scale-95">
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-[var(--foreground)] opacity-70">
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-slate-600">
+          {isMobileMenuOpen ? <X /> : <Menu />}
+        </button>
       </header>
 
       {/* Sidebar (Desktop) */}
       <aside className={`
-        fixed inset-0 z-40 md:relative md:flex flex-col w-64 bg-[var(--card-bg)] border-r border-[var(--card-border)] transition-transform duration-300 md:translate-x-0
+        fixed inset-0 z-40 md:relative md:flex flex-col w-64 bg-white border-r border-slate-200 transition-transform duration-300 md:translate-x-0
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-6 hidden md:flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-600/30">
-            <CheckCircle className="w-6 h-6 text-white" />
+        <div className="p-6 flex items-center gap-3">
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-600/20">
+            <CheckCircle className="w-5 h-5 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tight text-[var(--foreground)]">TaskFlow</span>
+          <span className="font-bold text-lg tracking-tight">TaskFlow</span>
         </div>
 
-        <nav className="flex-1 px-4 py-6 space-y-2">
+        <nav className="flex-1 px-4 py-4 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -60,8 +53,8 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
               className={`
                 flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all
                 ${location.pathname === item.path 
-                  ? 'bg-primary-600/10 text-primary-500 font-bold' 
-                  : 'text-[var(--foreground)] opacity-60 hover:opacity-100 hover:bg-[var(--background)]'}
+                  ? 'bg-blue-50 text-blue-600 font-bold' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'}
               `}
             >
               <item.icon className="w-5 h-5" />
@@ -69,32 +62,33 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
             </Link>
           ))}
           
-          <button
-            onClick={onCreateTask}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-primary-400 hover:bg-primary-600/10 transition-all mt-4 border border-primary-500/20"
-          >
-            <PlusCircle className="w-5 h-5" />
-            New Task
-          </button>
+          {user?.role === 'admin' && (
+            <button
+              onClick={onCreateTask}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-blue-600 hover:bg-blue-50 transition-all mt-4 border border-blue-100"
+            >
+              <PlusCircle className="w-5 h-5" />
+              New Task
+            </button>
+          )}
         </nav>
 
-        <div className="p-4 border-t border-[var(--card-border)]">
-          <div className="bg-[var(--background)] border border-[var(--card-border)] rounded-2xl p-4 mb-4">
+        <div className="p-4 border-t border-slate-100">
+          <div className="bg-slate-50 rounded-2xl p-4">
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 bg-[var(--card-bg)] border border-[var(--card-border)] rounded-full flex items-center justify-center text-[var(--foreground)] opacity-80">
+              <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-400">
                 <UserIcon className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[var(--foreground)] truncate">{user?.email}</p>
-                <p className="text-xs text-[var(--foreground)] opacity-50 capitalize flex items-center gap-1">
-                  {user?.role === 'admin' && <Shield className="w-3 h-3 text-amber-500" />}
-                  {user?.role}
+                <p className="text-sm font-semibold text-slate-900 truncate">{user?.email}</p>
+                <p className="text-xs text-slate-500 capitalize">
+                  {user?.role === 'admin' ? 'Administrator' : 'User'}
                 </p>
               </div>
             </div>
             <button
               onClick={logout}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white text-sm font-bold transition-all"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white text-xs font-bold transition-all"
             >
               <LogOut className="w-4 h-4" />
               Logout
@@ -106,31 +100,24 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top bar (Desktop) */}
-        <div className="hidden md:flex items-center justify-between p-6 border-b border-[var(--card-border)] bg-[var(--background)]/80 backdrop-blur-xl sticky top-0 z-30">
-          <div className="relative w-96 font-medium">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--foreground)] opacity-40" />
+        <div className="hidden md:flex items-center justify-between p-4 px-8 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+          <div className="relative w-80">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search tasks..." 
-              className="w-full bg-[var(--card-bg)] border border-[var(--card-border)] rounded-xl py-2.5 pl-11 pr-4 text-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-primary-500/40 transition-all font-medium"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-11 pr-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all"
             />
           </div>
-          <div className="flex items-center gap-6">
-            <button 
-              onClick={toggleTheme} 
-              className="p-2.5 rounded-xl bg-[var(--card-bg)] border border-[var(--card-border)] text-[var(--foreground)] hover:bg-[var(--background)] transition-all shadow-sm active:scale-95"
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+          {user?.role === 'admin' && (
             <button 
               onClick={onCreateTask}
-              className="bg-primary-600 hover:bg-primary-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-primary-600/30 active:scale-95"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-md shadow-blue-600/20 active:scale-95"
             >
               <PlusCircle className="w-4 h-4" />
               Create Task
             </button>
-          </div>
+          )}
         </div>
 
         {/* Content Area */}
@@ -142,7 +129,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
       {/* Mobile backdrop */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-30 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

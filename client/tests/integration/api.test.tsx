@@ -10,8 +10,8 @@ import api from '../../src/services/api';
 vi.mock('../../src/services/api');
 
 const mockTasks = [
-  { id: '1', title: 'Test Task 1', description: 'Description 1', status: 'pending', userId: 1, createdAt: new Date().toISOString() },
-  { id: '2', title: 'Test Task 2', description: 'Description 2', status: 'completed', userId: 1, createdAt: new Date().toISOString() },
+  { id: 1, title: 'Test Task 1', description: 'Description 1', status: 'pending', userId: 1, createdAt: new Date().toISOString() },
+  { id: 2, title: 'Test Task 2', description: 'Description 2', status: 'completed', userId: 1, createdAt: new Date().toISOString() },
 ];
 
 describe('Dashboard Integration', () => {

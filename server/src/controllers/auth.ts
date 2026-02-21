@@ -20,7 +20,7 @@ export const register = async (req: Request, res: Response) => {
 
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
-            return res.status(400).json({ message: 'User already exists' });
+            return res.status(400).json({ error: 'User already exists', message: 'User already exists' });
         }
 
         const hashedPassword = await hashPassword(password);
@@ -38,9 +38,9 @@ export const register = async (req: Request, res: Response) => {
         });
     } catch (error: any) {
         if (error instanceof z.ZodError) {
-            return res.status(400).json({ message: 'Validation error', errors: error.issues });
+            return res.status(400).json({ error: 'Validation error', message: error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ') });
         }
-        res.status(500).json({ message: 'Internal server error', error: error.message });
+        res.status(500).json({ error: 'Internal server error', message: error.message });
     }
 };
 
@@ -50,12 +50,12 @@ export const login = async (req: Request, res: Response) => {
 
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid email or password', message: 'Invalid email or password' });
         }
 
         const isPasswordValid = await comparePassword(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid email or password', message: 'Invalid email or password' });
         }
 
         const token = generateToken({ userId: user.id, role: user.role });
@@ -67,8 +67,8 @@ export const login = async (req: Request, res: Response) => {
         });
     } catch (error: any) {
         if (error instanceof z.ZodError) {
-            return res.status(400).json({ message: 'Validation error', errors: error.issues });
+            return res.status(400).json({ error: 'Validation error', message: error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ') });
         }
-        res.status(500).json({ message: 'Internal server error', error: error.message });
+        res.status(500).json({ error: 'Internal server error', message: error.message });
     }
 };

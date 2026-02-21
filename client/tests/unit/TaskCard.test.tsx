@@ -4,11 +4,11 @@ import TaskCard from '../../src/components/TaskCard';
 import { Task } from '../../src/types';
 
 const mockTask: Task = {
-  id: '1',
+  id: 1,
   title: 'Test Task',
   description: 'Test Description',
   status: 'pending',
-  userId: 'user-1',
+  userId: 1,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 };
