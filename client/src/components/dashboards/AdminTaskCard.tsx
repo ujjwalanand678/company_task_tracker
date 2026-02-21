@@ -19,7 +19,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
     <motion.div 
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="group glass-card rounded-2xl p-4 px-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
+      className="group glass-card rounded-2xl p-4 px-5 flex flex-col lg:flex-row items-start lg:items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
     >
       <div className="flex-1 min-w-0 w-full pt-2 flex flex-col gap-3">
         <div>
@@ -40,7 +40,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
         </p> */}
       </div>
 
-      <div className="flex items-center gap-8 w-full md:w-auto flex-shrink-0">
+      <div className="flex items-center justify-between lg:justify-end gap-4 xl:gap-8 w-full lg:w-auto flex-shrink-0 flex-wrap">
         <div className="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-xl">
           <div className="relative w-10 h-10 flex-shrink-0">
             <svg className="w-full h-full transform -rotate-90">

@@ -16,7 +16,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
     <motion.div 
       whileHover={{ x: 8 }}
       className={`
-        group glass-card rounded-[1.25rem] p-4 px-5 transition-all duration-500 relative overflow-hidden flex flex-col md:flex-row items-center gap-6
+        group glass-card rounded-[1.25rem] p-4 px-5 transition-all duration-500 relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center gap-6
         ${isCompleted ? 'opacity-80' : 'shadow-[0_24px_48px_-12px_rgba(0,0,0,0.04)]'}
       `}
     >
@@ -39,11 +39,11 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
           </h3>
         </div>
         
-        <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2">
-          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-2 mb-2">
+          <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100 max-w-max">
             Created {new Date(task.created_at).toLocaleDateString([], { month: 'long', day: 'numeric', year: 'numeric' })}
           </span>
-          <span className="hidden md:block w-1 h-1 rounded-full bg-slate-200" />
+          <span className="hidden lg:block w-1 h-1 rounded-full bg-slate-200" />
           <span className="text-[10px] text-blue-500 font-black uppercase tracking-widest">
             ID #{task.id}
           </span>
@@ -54,7 +54,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
         </p> */}
       </div>
 
-      <div className="flex items-center gap-8 w-full md:w-auto shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
+      <div className="flex items-center justify-between lg:justify-end gap-4 xl:gap-8 w-full lg:w-auto shrink-0 border-t lg:border-t-0 lg:border-l border-slate-100 pt-4 lg:pt-0 lg:pl-6 flex-wrap">
         <div className="flex items-center gap-4">
           <div className="flex flex-col">
             <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1">Assigned By</span>
