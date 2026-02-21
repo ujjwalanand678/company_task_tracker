@@ -22,7 +22,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
     >
       <div className="absolute top-4 left-4 z-10">
         <span className={`
-          px-2.5 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest flex items-center gap-1.5 shrink-0
+          px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shrink-0
           ${isCompleted 
             ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
             : 'bg-amber-50 text-amber-600 border border-amber-100'}
@@ -62,7 +62,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
           <div className="flex flex-col">
             <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1.5">Assigned By</span>
             <span className="text-sm font-black text-slate-900 uppercase leading-none truncate max-w-[160px]">
-              {task.creator?.name || 'Administrator'}
+              {(task.creator?.name && task.creator.name !== 'User') ? task.creator.name : task.creator?.email?.split('@')[0] || 'Administrator'}
             </span>
           </div>
         </div>

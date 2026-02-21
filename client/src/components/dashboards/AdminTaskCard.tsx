@@ -22,7 +22,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
       className="group glass-card rounded-2xl p-4 px-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
     >
       <div className="absolute top-4 left-4 z-10">
-        <span className={`px-2.5 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest ${
+        <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest ${
           progressPercent === 100 ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-blue-700 border border-blue-100'
         }`}>
           {progressPercent === 100 ? 'Done' : 'In Progress'}

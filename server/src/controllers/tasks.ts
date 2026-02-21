@@ -30,7 +30,7 @@ export const createTask = async (req: AuthRequest, res: Response) => {
                 }
             },
             include: {
-                creator: { select: { name: true } },
+                creator: { select: { name: true, email: true } },
                 assignments: {
                     include: { user: { select: { email: true, name: true } } }
                 }
@@ -53,7 +53,7 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
         if (role === 'admin') {
             const tasks = await prisma.task.findMany({
                 include: { 
-                    creator: { select: { name: true } },
+                    creator: { select: { name: true, email: true } },
                     assignments: { 
                         include: { user: { select: { email: true, name: true } } } 
                     } 
@@ -67,7 +67,7 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
                 where: { userId },
                 include: { 
                     task: {
-                        include: { creator: { select: { name: true } } }
+                        include: { creator: { select: { name: true, email: true } } }
                     }
                 },
                 orderBy: { createdAt: 'desc' }
@@ -121,7 +121,7 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
                 where: { id: Number(id) },
                 data: updateData,
                 include: {
-                    creator: { select: { name: true } },
+                    creator: { select: { name: true, email: true } },
                     assignments: {
                         include: { user: { select: { email: true, name: true } } }
                     }
