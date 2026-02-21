@@ -71,7 +71,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, allUse
       <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
       
       <div className="relative w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        <div className="flex items-center justify-between p-6 border-b border-slate-100 flex-shrink-0">
+        <div className="flex items-center justify-between p-5 border-b border-slate-100 flex-shrink-0">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-inner">
               {initialData ? <Edit3 className="w-6 h-6" /> : <PlusCircle className="w-6 h-6" />}
@@ -85,7 +85,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, allUse
           </button>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="overflow-y-auto p-6 space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="overflow-y-auto p-5 space-y-5">
           <div className="space-y-2">
             <label htmlFor="task-title" className="block text-sm font-bold text-slate-700 ml-1">Title</label>
             <input
@@ -150,7 +150,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, allUse
             )}
           </div>
 
-          <div className="flex items-center gap-3 pt-4 border-t border-slate-100 mt-2 flex-shrink-0">
+          <div className="flex items-center gap-3 pt-3 border-t border-slate-100 mt-2 flex-shrink-0">
             <button
               type="button"
               onClick={onClose}

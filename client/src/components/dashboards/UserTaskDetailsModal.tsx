@@ -30,7 +30,7 @@ const UserTaskDetailsModal: React.FC<UserTaskDetailsModalProps> = ({ isOpen, onC
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             className="relative w-full max-w-lg bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
           >
-            <div className="flex items-center justify-between p-8 border-b border-slate-100 bg-slate-50/50 shrink-0">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50 shrink-0">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
                   <FileText className="w-6 h-6" />
@@ -51,7 +51,7 @@ const UserTaskDetailsModal: React.FC<UserTaskDetailsModalProps> = ({ isOpen, onC
             </div>
 
             <div className="overflow-y-auto customized-scrollbar flex-1">
-              <div className="p-8 space-y-8">
+              <div className="p-6 space-y-6">
                 <div className="space-y-4">
                   <h3 className="text-xl font-black text-slate-900 tracking-tight font-['Outfit']">{task.title}</h3>
                   <div className="flex flex-wrap gap-4">
@@ -68,7 +68,7 @@ const UserTaskDetailsModal: React.FC<UserTaskDetailsModalProps> = ({ isOpen, onC
 
                 <div className="space-y-3">
                   <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Detailed Description</h4>
-                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 min-h-[120px]">
+                  <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 min-h-[120px]">
                     <p className="text-sm text-slate-600 font-medium leading-relaxed whitespace-pre-wrap">
                       {task.description || 'No additional details provided.'}
                     </p>

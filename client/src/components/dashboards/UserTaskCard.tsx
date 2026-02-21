@@ -16,7 +16,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
     <motion.div 
       whileHover={{ x: 8 }}
       className={`
-        group glass-card rounded-[1.25rem] p-5 transition-all duration-500 relative overflow-hidden flex flex-col md:flex-row items-center gap-6
+        group glass-card rounded-[1.25rem] p-4 px-5 transition-all duration-500 relative overflow-hidden flex flex-col md:flex-row items-center gap-6
         ${isCompleted ? 'opacity-80' : 'shadow-[0_24px_48px_-12px_rgba(0,0,0,0.04)]'}
       `}
     >
@@ -32,7 +32,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
         </span>
       </div>
 
-      <div className="flex-1 min-w-0 pt-6">
+      <div className="flex-1 min-w-0 pt-4">
         <div className="flex items-center gap-3 mb-1">
           <h3 className={`text-lg font-black leading-tight tracking-tight transition-all font-['Outfit'] truncate ${isCompleted ? 'text-[var(--foreground)] opacity-40 line-through' : 'text-[var(--foreground)]'}`}>
             {task.title}
@@ -54,7 +54,7 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
         </p> */}
       </div>
 
-      <div className="flex items-center gap-8 w-full md:w-auto shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-6 md:pt-0 md:pl-8">
+      <div className="flex items-center gap-8 w-full md:w-auto shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 rounded-2xl bg-primary-600/10 flex items-center justify-center text-primary-500 border border-primary-500/10 shadow-inner">
             <UserIcon className="w-5 h-5" />

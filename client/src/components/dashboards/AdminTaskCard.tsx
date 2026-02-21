@@ -19,7 +19,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
     <motion.div 
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="group glass-card rounded-2xl p-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
+      className="group glass-card rounded-2xl p-4 px-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
     >
       <div className="absolute top-4 left-4 z-10">
         <span className={`px-2.5 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest ${
@@ -29,7 +29,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
         </span>
       </div>
 
-      <div className="flex-1 min-w-0 w-full pt-6">
+      <div className="flex-1 min-w-0 w-full pt-4">
         <div className="flex items-center gap-3 mb-2">
           <h3 className="text-lg font-black text-slate-900 truncate font-['Outfit']">
             {task.title}
@@ -71,7 +71,7 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
           <ChevronRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5" />
         </button>
 
-        <div className="flex items-center gap-2 border-l border-slate-100 pl-6">
+        <div className="flex items-center gap-2 border-l border-slate-100 pl-4">
           <button 
             onClick={() => onEdit(task)}
             className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"

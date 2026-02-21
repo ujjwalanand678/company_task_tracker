@@ -21,7 +21,7 @@ const AdminTaskDetailModal: React.FC<AdminTaskDetailModalProps> = ({ isOpen, onC
       <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
       
       <div className="relative w-full max-w-2xl bg-white border border-slate-200 rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-        <div className="flex items-center justify-between p-8 border-b border-slate-100 bg-slate-50/50 shrink-0">
+        <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-6">
             <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center text-white shadow-xl shadow-blue-600/20">
               <UsersIcon className="w-8 h-8" />
@@ -42,10 +42,10 @@ const AdminTaskDetailModal: React.FC<AdminTaskDetailModalProps> = ({ isOpen, onC
           </button>
         </div>
 
-        <div className="overflow-y-auto p-8 space-y-10 customized-scrollbar flex-1">
+        <div className="overflow-y-auto p-6 space-y-6 customized-scrollbar flex-1">
           <div className="space-y-4">
             <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Description</h3>
-            <p className="text-lg text-slate-600 font-medium leading-relaxed bg-slate-50 p-6 rounded-3xl border border-slate-100">
+            <p className="text-lg text-slate-600 font-medium leading-relaxed bg-slate-50 p-5 rounded-3xl border border-slate-100">
               {task.description || 'No description provided for this task.'}
             </p>
           </div>
@@ -70,7 +70,7 @@ const AdminTaskDetailModal: React.FC<AdminTaskDetailModalProps> = ({ isOpen, onC
               {task.assignments?.map((assignment) => (
                 <div 
                   key={assignment.id}
-                  className="flex items-center justify-between p-5 bg-white border border-slate-100 rounded-[1.5rem] hover:border-blue-500/30 hover:shadow-md transition-all group"
+                  className="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-[1.5rem] hover:border-blue-500/30 hover:shadow-md transition-all group"
                 >
                   <div className="flex items-center gap-4">
                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm ${

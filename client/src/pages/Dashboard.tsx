@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
   return (
     <Layout onCreateTask={() => { setEditingTask(null); setIsModalOpen(true); }}>
       <AnimatedPage>
-        <div className="space-y-12 pb-20 relative">
+        <div className="space-y-8 pb-12 relative">
           {/* Production Level Background Decorations */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <motion.div 

@@ -62,7 +62,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const completionRate = totalTasks > 0 ? Math.round((fullyCompletedTasks / totalTasks) * 100) : 0;
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       <AdminTaskDetailModal 
         isOpen={!!selectedDetailTask}
         onClose={() => setSelectedDetailTask(null)}
@@ -72,7 +72,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <section className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 glass-card rounded-[2rem] p-6 flex lg:flex-row flex-col items-center gap-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-500"
+          className="lg:col-span-2 glass-card rounded-[2rem] p-5 flex lg:flex-row flex-col items-center gap-6 relative overflow-hidden group hover:shadow-2xl transition-all duration-500"
         >
           <div className="relative w-32 h-32 flex-shrink-0">
             <svg className="w-full h-full transform -rotate-90">
@@ -98,7 +98,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-[2rem] p-6 group hover:shadow-2xl transition-all">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-[2rem] p-5 group hover:shadow-2xl transition-all">
           <div className="flex items-center justify-between mb-6">
             <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 shadow-inner"><PlusCircle className="w-6 h-6" /></div>
             <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold border border-blue-100">Tasks</span>
@@ -106,7 +106,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <h3 className="text-4xl font-black text-[var(--foreground)] tracking-tight font-['Outfit']">{tasks.length}</h3>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="glass-card rounded-[2rem] p-6 group hover:shadow-2xl transition-all">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="glass-card rounded-[2rem] p-5 group hover:shadow-2xl transition-all">
           <div className="flex items-center justify-between mb-6">
             <div className="w-12 h-12 bg-primary-600/10 rounded-2xl flex items-center justify-center text-primary-500 shadow-inner"><UsersIcon className="w-6 h-6" /></div>
             <span className="px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-[10px] font-bold border border-slate-100">Users</span>
@@ -116,7 +116,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       </section>
 
       <section className="relative z-10">
-        <div className="flex items-center justify-between mb-8 px-2">
+        <div className="flex items-center justify-between mb-6 px-2">
           <h2 className="text-2xl font-black text-slate-900 tracking-tight font-['Outfit']">System Tasks</h2>
           <motion.button 
             whileHover={{ scale: 1.05 }} 
@@ -130,7 +130,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {tasks.length === 0 ? (
-          <div className="glass-card border-dashed border-2 rounded-[2.5rem] p-16 flex flex-col items-center justify-center transition-all hover:border-primary-500/20 bg-slate-50/50">
+          <div className="glass-card border-dashed border-2 rounded-[2.5rem] p-10 flex flex-col items-center justify-center transition-all hover:border-primary-500/20 bg-slate-50/50">
             <PlusCircle className="w-10 h-10 text-slate-200 mb-6" />
             <h3 className="text-xl font-bold text-slate-400">No tasks in system</h3>
           </div>
@@ -154,8 +154,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
 
       {/* User Directory Section */}
-      <motion.section initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-24 border-t border-[var(--card-border)]/50">
-        <div className="flex items-center justify-between mb-8">
+      <motion.section initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-12 border-t border-[var(--card-border)]/50">
+        <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-black text-[var(--foreground)] tracking-tight font-['Outfit'] flex items-center gap-4">
             <div className="w-10 h-10 bg-primary-500/10 rounded-xl flex items-center justify-center text-primary-500">
               <UsersIcon className="w-6 h-6" />
@@ -170,7 +170,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 border-b text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
-                <th className="px-8 py-6 uppercase tracking-[0.4em]">User</th>
+                <th className="px-8 py-4 uppercase tracking-[0.4em]">User</th>
                 <th className="px-8 py-6 uppercase tracking-[0.4em]">Role</th>
                 <th className="px-8 py-6 uppercase tracking-[0.4em]">Joined</th>
                 <th className="px-8 py-6 text-right uppercase tracking-[0.4em]">Actions</th>
@@ -179,14 +179,14 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <tbody className="divide-y divide-slate-100">
               {allUsers.filter(u => u.role === 'user').map((u) => (
                 <tr key={u.id} className="hover:bg-primary-500/[0.02] transition-all">
-                  <td className="px-8 py-6">
+                  <td className="px-8 py-4">
                     <div className="flex flex-col">
                       <span className="font-bold text-slate-700">{u.name || 'Unnamed Member'}</span>
                       <span className="text-[10px] text-slate-400 font-medium">{u.email}</span>
                     </div>
                   </td>
                   <td className="px-8 py-6"><span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[8px] font-black uppercase tracking-widest">{u.role}</span></td>
-                  <td className="px-8 py-6">
+                  <td className="px-8 py-4">
                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                       {new Date(u.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>

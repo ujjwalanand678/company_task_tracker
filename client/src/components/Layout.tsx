@@ -37,14 +37,14 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
         fixed inset-0 z-40 md:relative md:flex flex-col w-64 bg-white border-r border-slate-200 transition-transform duration-300 md:translate-x-0
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-6 flex items-center gap-3">
+        <div className="p-5 flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-600/20">
             <CheckCircle className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight">TaskFlow</span>
         </div>
 
-        <nav className="flex-1 px-4 py-4 space-y-1">
+        <nav className="flex-1 px-4 py-3 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -74,7 +74,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
         </nav>
 
         <div className="p-4 border-t border-slate-100">
-          <div className="bg-slate-50 rounded-2xl p-4">
+          <div className="bg-slate-50 rounded-2xl p-3">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-10 h-10 bg-white border border-slate-200 rounded-full flex items-center justify-center text-slate-400">
                 <UserIcon className="w-5 h-5" />
@@ -100,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* Top bar (Desktop) */}
-        <div className="hidden md:flex items-center justify-between p-4 px-8 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+        <div className="hidden md:flex items-center justify-between p-3 px-8 border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-30">
           <div className="relative w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input 
@@ -121,7 +121,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8">
+        <div className="flex-1 overflow-y-auto p-4 md:p-6">
           {children}
         </div>
       </main>

@@ -16,7 +16,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) 
   const completionRate = tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8">
       <UserTaskDetailsModal 
         isOpen={!!selectedTask}
         onClose={() => setSelectedTask(null)}
@@ -26,7 +26,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) 
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          className="lg:col-span-2 glass-card rounded-[2rem] p-8 flex lg:flex-row flex-col items-center gap-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-500"
+          className="lg:col-span-2 glass-card rounded-[2rem] p-6 flex lg:flex-row flex-col items-center gap-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-500"
         >
           <div className="relative w-32 h-32 flex-shrink-0">
             <svg className="w-full h-full transform -rotate-90">
@@ -49,7 +49,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) 
           </div>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-[2rem] p-8 flex flex-col justify-center text-center group hover:shadow-2xl transition-all">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-[2rem] p-6 flex flex-col justify-center text-center group hover:shadow-2xl transition-all">
           <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto"><ListTodo className="w-6 h-6" /></div>
           <p className="text-slate-400 text-[10px] font-black uppercase tracking-widest mb-1">To Do</p>
           <h3 className="text-4xl font-black text-slate-900 font-['Outfit']">{tasks.length - completedCount}</h3>
@@ -57,13 +57,13 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) 
       </section>
 
       <section className="relative z-10">
-        <div className="mb-12">
+        <div className="mb-8">
           <h2 className="text-2xl font-black text-slate-900 tracking-tight font-['Outfit']">My Assigned Tasks</h2>
           <p className="text-slate-500 text-sm font-medium">Manage and track your private workspace.</p>
         </div>
 
         {tasks.length === 0 ? (
-          <div className="glass-card border-2 border-dashed rounded-[2.5rem] p-20 flex flex-col items-center justify-center text-center opacity-60">
+          <div className="glass-card border-2 border-dashed rounded-[2.5rem] p-10 flex flex-col items-center justify-center text-center opacity-60">
             <CheckCircle className="w-16 h-16 text-slate-200 mb-6" />
             <h3 className="text-xl font-bold text-slate-400">All caught up! No tasks assigned yet.</h3>
           </div>
