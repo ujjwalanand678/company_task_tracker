@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield, X } from 'lucide-react';
+import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield, X, Eye, EyeOff } from 'lucide-react';
 import api from '../services/api';
 import AnimatedPage from '../components/AnimatedPage';
 
@@ -142,9 +142,9 @@ const Register: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                     >
-                      {showPassword ? <X className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                      {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
                   </div>
                   {errors.password && (
@@ -161,9 +161,16 @@ const Register: React.FC = () => {
                       type={showPassword ? "text" : "password"}
                       className={`w-full bg-slate-50 border ${
                         errors.confirmPassword ? 'border-red-500' : 'border-slate-200'
-                      } rounded-2xl py-4 pl-12 pr-4 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
+                      } rounded-2xl py-4 pl-12 pr-12 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
                       placeholder="••••••••"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                    >
+                      {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                    </button>
                   </div>
                    {errors.confirmPassword && (
                     <p className="mt-2 text-xs text-red-500 font-bold ml-1">{errors.confirmPassword.message}</p>
