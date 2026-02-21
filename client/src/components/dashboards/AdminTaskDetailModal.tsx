@@ -79,7 +79,7 @@ const AdminTaskDetailModal: React.FC<AdminTaskDetailModalProps> = ({ isOpen, onC
                       {(assignment.user?.name || assignment.user?.email || '?').charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <h4 className="font-bold text-slate-900 leading-none mb-1">{assignment.user?.name || assignment.user?.email}</h4>
+                      <h4 className="font-bold text-slate-900 leading-none mb-1">{assignment.user?.name || 'Unnamed Member'}</h4>
                       <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Team Member</span>
                     </div>
                   </div>

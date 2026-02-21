@@ -179,7 +179,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <tr key={u.id} className="hover:bg-amber-500/[0.02] transition-all">
                   <td className="px-8 py-6">
                     <div className="flex flex-col">
-                      <span className="font-bold text-slate-700">{u.name || (u.email ? u.email.split('@')[0] : 'Admin')}</span>
+                      <span className="font-bold text-slate-700">{u.name || 'Unnamed Administrator'}</span>
                       <span className="text-[10px] text-slate-400 font-medium">{u.email}</span>
                     </div>
                   </td>
@@ -226,7 +226,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <tr key={u.id} className="hover:bg-primary-500/[0.02] transition-all">
                   <td className="px-8 py-6">
                     <div className="flex flex-col">
-                      <span className="font-bold text-slate-700">{u.name || u.email}</span>
+                      <span className="font-bold text-slate-700">{u.name || 'Unnamed Member'}</span>
                       <span className="text-[10px] text-slate-400 font-medium">{u.email}</span>
                     </div>
                   </td>
