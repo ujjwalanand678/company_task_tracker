@@ -20,19 +20,19 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
         ${isCompleted ? 'opacity-80' : 'shadow-[0_24px_48px_-12px_rgba(0,0,0,0.04)]'}
       `}
     >
-      <div className="absolute top-4 left-4 z-10">
-        <span className={`
-          px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5 shrink-0
-          ${isCompleted 
-            ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
-            : 'bg-amber-50 text-amber-600 border border-amber-100'}
-        `}>
-          {isCompleted ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
-          {isCompleted ? 'Complete' : 'Pending'}
-        </span>
-      </div>
+      <div className="flex-1 min-w-0 pt-2 flex flex-col gap-3">
+        <div>
+          <span className={`
+            inline-flex px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest items-center gap-1.5 shrink-0 self-start
+            ${isCompleted 
+              ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' 
+              : 'bg-amber-50 text-amber-600 border border-amber-100'}
+          `}>
+            {isCompleted ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+            {isCompleted ? 'Complete' : 'Pending'}
+          </span>
+        </div>
 
-      <div className="flex-1 min-w-0 pt-4">
         <div className="flex items-center gap-3 mb-1">
           <h3 className={`text-lg font-black leading-tight tracking-tight transition-all font-['Outfit'] truncate ${isCompleted ? 'text-[var(--foreground)] opacity-40 line-through' : 'text-[var(--foreground)]'}`}>
             {task.title}

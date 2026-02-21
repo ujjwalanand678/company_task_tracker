@@ -21,15 +21,15 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
       animate={{ opacity: 1, x: 0 }}
       className="group glass-card rounded-2xl p-4 px-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
     >
-      <div className="absolute top-4 left-4 z-10">
-        <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest ${
-          progressPercent === 100 ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-blue-700 border border-blue-100'
-        }`}>
-          {progressPercent === 100 ? 'Done' : 'In Progress'}
-        </span>
-      </div>
+      <div className="flex-1 min-w-0 w-full pt-2 flex flex-col gap-3">
+        <div>
+          <span className={`inline-flex px-3 py-1.5 rounded-lg text-[9px] font-black uppercase tracking-widest items-center self-start ${
+            progressPercent === 100 ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-blue-700 border border-blue-100'
+          }`}>
+            {progressPercent === 100 ? 'Done' : 'In Progress'}
+          </span>
+        </div>
 
-      <div className="flex-1 min-w-0 w-full pt-4">
         <div className="flex items-center gap-3 mb-2">
           <h3 className="text-lg font-black text-slate-900 truncate font-['Outfit']">
             {task.title}
