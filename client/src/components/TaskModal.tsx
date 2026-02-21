@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { X, Loader2, CheckCircle2, Clock, PlusCircle, Edit3, Users as UsersIcon } from 'lucide-react';
+import { X, Loader2, CheckCircle2, PlusCircle, Edit3, Users as UsersIcon } from 'lucide-react';
 import type { Task, User } from '../types';
 
 const taskSchema = z.object({

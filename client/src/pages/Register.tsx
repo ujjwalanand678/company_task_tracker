@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield, X, Eye, EyeOff } from 'lucide-react';
+import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield, Eye, EyeOff } from 'lucide-react';
 import api from '../services/api';
 import AnimatedPage from '../components/AnimatedPage';
 
