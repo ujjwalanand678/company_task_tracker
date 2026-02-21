@@ -99,17 +99,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card rounded-[2rem] p-5 group hover:shadow-2xl transition-all">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 shadow-inner"><PlusCircle className="w-6 h-6" /></div>
-            <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold border border-blue-100">Tasks</span>
+          <div className="flex items-center justify-end mb-6">
+            <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest border border-blue-100">Total Tasks</span>
           </div>
           <h3 className="text-4xl font-black text-[var(--foreground)] tracking-tight font-['Outfit']">{tasks.length}</h3>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="glass-card rounded-[2rem] p-5 group hover:shadow-2xl transition-all">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 bg-primary-600/10 rounded-2xl flex items-center justify-center text-primary-500 shadow-inner"><UsersIcon className="w-6 h-6" /></div>
-            <span className="px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-[10px] font-bold border border-slate-100">Users</span>
+          <div className="flex items-center justify-end mb-6">
+            <span className="px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-[10px] font-black uppercase tracking-widest border border-slate-100">Total Users</span>
           </div>
           <h3 className="text-4xl font-black text-[var(--foreground)] tracking-tight font-['Outfit']">{allUsers.length}</h3>
         </motion.div>
