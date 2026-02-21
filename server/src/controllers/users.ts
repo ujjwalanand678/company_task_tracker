@@ -7,7 +7,7 @@ export const getProfile = async (req: AuthRequest, res: Response) => {
         const userId = req.user!.userId;
         const user = await prisma.user.findUnique({
             where: { id: userId },
-            select: { id: true, email: true, role: true }
+            select: { id: true, email: true, name: true, role: true, createdAt: true }
         });
 
         if (!user) {
@@ -23,7 +23,7 @@ export const getProfile = async (req: AuthRequest, res: Response) => {
 export const getAllUsers = async (req: AuthRequest, res: Response) => {
     try {
         const users = await prisma.user.findMany({
-            select: { id: true, email: true, role: true }
+            select: { id: true, email: true, name: true, role: true, createdAt: true }
         });
         res.json(users);
     } catch (error: any) {

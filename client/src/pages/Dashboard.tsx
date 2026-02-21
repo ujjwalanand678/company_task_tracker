@@ -60,11 +60,13 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleUpdateTask = async (data: any) => {
-    if (!editingTask) return;
+  const handleUpdateTask = async (data: any, taskId?: number) => {
+    const id = taskId || editingTask?.id;
+    if (!id) return;
+    
     setModalLoading(true);
     try {
-      await api.put(`/tasks/${editingTask.id}`, data);
+      await api.put(`/tasks/${id}`, data);
       await fetchData();
       setIsModalOpen(false);
       setEditingTask(null);
@@ -103,21 +105,21 @@ const Dashboard: React.FC = () => {
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <motion.div 
               animate={{ 
-                x: [0, 50, 0],
-                y: [0, -30, 0],
-                scale: [1, 1.1, 1]
+                x: [0, 30, 0],
+                y: [0, -20, 0],
+                scale: [1, 1.05, 1]
               }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-              className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary-500/5 rounded-full blur-[120px]" 
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              className="absolute top-[-5%] right-[-10%] w-[35%] h-[35%] bg-blue-400/5 rounded-full blur-[100px]" 
             />
             <motion.div 
               animate={{ 
-                x: [0, -50, 0],
-                y: [0, 30, 0],
-                scale: [1, 1.2, 1]
+                x: [0, -30, 0],
+                y: [0, 20, 0],
+                scale: [1, 1.1, 1]
               }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-              className="absolute bottom-[10%] left-[-5%] w-[50%] h-[50%] bg-primary-600/5 rounded-full blur-[140px]" 
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute bottom-[5%] left-[-15%] w-[45%] h-[45%] bg-indigo-400/5 rounded-full blur-[120px]" 
             />
           </div>
 

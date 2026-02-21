@@ -152,11 +152,64 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
         )}
       </section>
 
+      {/* Admin Directory Section */}
       <motion.section initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-24 border-t border-[var(--card-border)]/50">
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-black text-[var(--foreground)] tracking-tight font-['Outfit'] flex items-center gap-4">
-            <UsersIcon className="w-10 h-10 p-2 glass-card rounded-xl text-primary-500" /> User Directory
+            <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500">
+              <UsersIcon className="w-6 h-6" />
+            </div>
+            Admin Directory
           </h2>
+          <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-lg text-[10px] font-black uppercase tracking-widest border border-amber-100">
+            {allUsers.filter(u => u.role === 'admin').length} Admins
+          </span>
+        </div>
+        <div className="glass-card rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="bg-slate-50 border-b text-[10px] font-black uppercase tracking-[0.4em] text-slate-400">
+                <th className="px-8 py-6 uppercase tracking-[0.4em]">Administrator</th>
+                <th className="px-8 py-6 uppercase tracking-[0.4em]">Email Status</th>
+                <th className="px-8 py-6 uppercase tracking-[0.4em]">Joined</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {allUsers.filter(u => u.role === 'admin').map((u) => (
+                <tr key={u.id} className="hover:bg-amber-500/[0.02] transition-all">
+                  <td className="px-8 py-6">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-slate-700">{u.name || 'Admin'}</span>
+                      <span className="text-[10px] text-slate-400 font-medium">{u.email}</span>
+                    </div>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-lg text-[8px] font-black uppercase tracking-widest">Master Admin</span>
+                  </td>
+                  <td className="px-8 py-6">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      {new Date(u.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </motion.section>
+
+      {/* User Directory Section */}
+      <motion.section initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-24">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-black text-[var(--foreground)] tracking-tight font-['Outfit'] flex items-center gap-4">
+            <div className="w-10 h-10 bg-primary-500/10 rounded-xl flex items-center justify-center text-primary-500">
+              <UsersIcon className="w-6 h-6" />
+            </div>
+            User Directory
+          </h2>
+          <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest border border-blue-100">
+            {allUsers.filter(u => u.role === 'user').length} Workforce
+          </span>
         </div>
         <div className="glass-card rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-100">
           <table className="w-full text-left">
@@ -169,12 +222,28 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {allUsers.map((u) => (
+              {allUsers.filter(u => u.role === 'user').map((u) => (
                 <tr key={u.id} className="hover:bg-primary-500/[0.02] transition-all">
-                  <td className="px-8 py-6 font-bold text-slate-700">{u.email}</td>
+                  <td className="px-8 py-6">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-slate-700">{u.name || 'No Name'}</span>
+                      <span className="text-[10px] text-slate-400 font-medium">{u.email}</span>
+                    </div>
+                  </td>
                   <td className="px-8 py-6"><span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[8px] font-black uppercase tracking-widest">{u.role}</span></td>
-                  <td className="px-8 py-6 text-[10px] opacity-40">{new Date(u.createdAt).toLocaleDateString()}</td>
-                  <td className="px-8 py-6 text-right">{u.role !== 'admin' && <button onClick={() => handleDeleteUser(u.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-all"><Trash2 className="w-4 h-4" /></button>}</td>
+                  <td className="px-8 py-6">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      {new Date(u.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </span>
+                  </td>
+                  <td className="px-8 py-6 text-right">
+                    <button 
+                      onClick={() => handleDeleteUser(u.id)} 
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

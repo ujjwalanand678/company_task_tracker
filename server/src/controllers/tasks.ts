@@ -22,6 +22,7 @@ export const createTask = async (req: AuthRequest, res: Response) => {
             data: {
                 title,
                 description,
+                creatorId: req.user!.userId,
                 assignments: {
                     create: assignedUserIds.map(userId => ({
                         userId
@@ -29,8 +30,9 @@ export const createTask = async (req: AuthRequest, res: Response) => {
                 }
             },
             include: {
+                creator: { select: { name: true } },
                 assignments: {
-                    include: { user: { select: { email: true } } }
+                    include: { user: { select: { email: true, name: true } } }
                 }
             }
         });
@@ -51,8 +53,9 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
         if (role === 'admin') {
             const tasks = await prisma.task.findMany({
                 include: { 
+                    creator: { select: { name: true } },
                     assignments: { 
-                        include: { user: { select: { email: true } } } 
+                        include: { user: { select: { email: true, name: true } } } 
                     } 
                 },
                 orderBy: { created_at: 'desc' }
@@ -62,7 +65,11 @@ export const getTasks = async (req: AuthRequest, res: Response) => {
             // For regular users, we return their specific assignments with task details
             const assignments = await prisma.taskAssignment.findMany({
                 where: { userId },
-                include: { task: true },
+                include: { 
+                    task: {
+                        include: { creator: { select: { name: true } } }
+                    }
+                },
                 orderBy: { createdAt: 'desc' }
             });
             
@@ -96,8 +103,9 @@ export const updateTask = async (req: AuthRequest, res: Response) => {
                 where: { id: Number(id) },
                 data: { title, description },
                 include: {
+                    creator: { select: { name: true } },
                     assignments: {
-                        include: { user: { select: { email: true } } }
+                        include: { user: { select: { email: true, name: true } } }
                     }
                 }
             });

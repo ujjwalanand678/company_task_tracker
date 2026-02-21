@@ -21,20 +21,23 @@ const AdminTaskCard: React.FC<AdminTaskCardProps> = ({ task, onEdit, onDelete, o
       animate={{ opacity: 1, x: 0 }}
       className="group glass-card rounded-2xl p-5 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-all duration-300 border border-slate-100"
     >
-      <div className="flex-1 min-w-0 w-full">
+      <div className="absolute top-4 left-4 z-10">
+        <span className={`px-2.5 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest ${
+          progressPercent === 100 ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-blue-700 border border-blue-100'
+        }`}>
+          {progressPercent === 100 ? 'Done' : 'In Progress'}
+        </span>
+      </div>
+
+      <div className="flex-1 min-w-0 w-full pt-6">
         <div className="flex items-center gap-3 mb-2">
           <h3 className="text-lg font-black text-slate-900 truncate font-['Outfit']">
             {task.title}
           </h3>
-          <span className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest ${
-            progressPercent === 100 ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'
-          }`}>
-            {progressPercent === 100 ? 'Done' : 'In Progress'}
-          </span>
         </div>
-        <p className="text-sm text-slate-500 line-clamp-1 font-medium">
+        {/* <p className="text-sm text-slate-500 line-clamp-1 font-medium">
           {task.description || 'No description provided.'}
-        </p>
+        </p> */}
       </div>
 
       <div className="flex items-center gap-8 w-full md:w-auto flex-shrink-0">

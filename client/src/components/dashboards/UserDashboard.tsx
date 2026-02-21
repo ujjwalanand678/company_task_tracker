@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserTaskCard from './UserTaskCard';
+import UserTaskDetailsModal from './UserTaskDetailsModal';
 import type { Task } from '../../types';
 import { ListTodo, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,11 +11,18 @@ interface UserDashboardProps {
 }
 
 const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) => {
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const completedCount = tasks.filter(t => t.status === 'completed').length;
   const completionRate = tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
 
   return (
     <div className="space-y-12">
+      <UserTaskDetailsModal 
+        isOpen={!!selectedTask}
+        onClose={() => setSelectedTask(null)}
+        task={selectedTask}
+      />
+
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -60,11 +68,21 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ tasks, onStatusToggle }) 
             <h3 className="text-xl font-bold text-slate-400">All caught up! No tasks assigned yet.</h3>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="space-y-6 max-w-5xl mx-auto">
             <AnimatePresence mode="popLayout">
               {tasks.map((task, index) => (
-                <motion.div key={task.id} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.05 }} layout>
-                  <UserTaskCard task={task} onStatusToggle={onStatusToggle} />
+                <motion.div 
+                  key={task.id} 
+                  initial={{ opacity: 0, x: -20 }} 
+                  animate={{ opacity: 1, x: 0 }} 
+                  transition={{ delay: index * 0.05 }} 
+                  layout
+                >
+                  <UserTaskCard 
+                    task={task} 
+                    onStatusToggle={onStatusToggle} 
+                    onViewDetails={setSelectedTask} 
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>

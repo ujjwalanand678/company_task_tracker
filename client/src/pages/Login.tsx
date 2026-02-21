@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogIn, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
+import { LogIn, Mail, Lock, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 
@@ -21,6 +21,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -92,15 +93,22 @@ const Login: React.FC = () => {
                 <label htmlFor="password" className="block text-sm font-bold text-slate-700 ml-1">Password</label>
                 <div className="relative group">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-all" />
-                  <input
-                    {...register('password')}
-                    id="password"
-                    type="password"
-                    className={`w-full bg-slate-50 border ${
-                      errors.password ? 'border-red-500' : 'border-slate-200'
-                    } rounded-2xl py-4 pl-12 pr-4 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
-                    placeholder="••••••••"
-                  />
+                    <input
+                      {...register('password')}
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      className={`w-full bg-slate-50 border ${
+                        errors.password ? 'border-red-500' : 'border-slate-200'
+                      } rounded-2xl py-4 pl-12 pr-12 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
+                      placeholder="••••••••"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
                 </div>
                 {errors.password && (
                   <p className="mt-2 text-xs text-red-500 font-bold ml-1">{errors.password.message}</p>

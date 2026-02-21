@@ -6,8 +6,8 @@ import { X, Loader2, CheckCircle2, Clock, PlusCircle, Edit3, Users as UsersIcon 
 import type { Task, User } from '../types';
 
 const taskSchema = z.object({
-  title: z.string().min(1, 'Title is required').max(100),
-  description: z.string().max(500),
+  title: z.string().min(1, 'Title is required').max(200),
+  description: z.string().max(5000).optional(),
   assignedUserIds: z.array(z.number()).min(1, 'At least one user must be assigned'),
 });
 

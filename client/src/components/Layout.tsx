@@ -80,7 +80,7 @@ const Layout: React.FC<LayoutProps> = ({ children, onCreateTask }) => {
                 <UserIcon className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-slate-900 truncate">{user?.email}</p>
+                <p className="text-sm font-semibold text-slate-900 truncate">{user?.name || user?.email}</p>
                 <p className="text-xs text-slate-500 capitalize">
                   {user?.role === 'admin' ? 'Administrator' : 'User'}
                 </p>

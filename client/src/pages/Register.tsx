@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield } from 'lucide-react';
+import { UserPlus, Mail, Lock, User as UserIcon, AlertCircle, Loader2, Shield, X } from 'lucide-react';
 import api from '../services/api';
 import AnimatedPage from '../components/AnimatedPage';
 
 const registerSchema = z.object({
+  name: z.string().min(2, 'Full name is required'),
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
   confirmPassword: z.string().min(6, 'Please confirm your password'),
@@ -23,15 +24,17 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
-    register,
+    register: registerField,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
@@ -46,6 +49,7 @@ const Register: React.FC = () => {
     setError(null);
     try {
       await api.post('/auth/register', {
+        name: data.name,
         email: data.email,
         password: data.password,
         role: data.role,
@@ -84,11 +88,30 @@ const Register: React.FC = () => {
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
+                <label htmlFor="name" className="block text-sm font-bold text-slate-700 ml-1">Full Name</label>
+                <div className="relative group">
+                  <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-all" />
+                  <input
+                    {...registerField('name')}
+                    id="name"
+                    type="text"
+                    className={`w-full bg-slate-50 border ${
+                      errors.name ? 'border-red-500' : 'border-slate-200'
+                    } rounded-2xl py-4 pl-12 pr-4 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
+                    placeholder="E.g. John Doe"
+                  />
+                </div>
+                {errors.name && (
+                  <p className="mt-2 text-xs text-red-500 font-bold ml-1">{errors.name.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
                 <label htmlFor="email" className="block text-sm font-bold text-slate-700 ml-1">Email Address</label>
                 <div className="relative group">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-all" />
                   <input
-                    {...register('email')}
+                    {...registerField('email')}
                     id="email"
                     type="email"
                     className={`w-full bg-slate-50 border ${
@@ -108,14 +131,21 @@ const Register: React.FC = () => {
                   <div className="relative group">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-all" />
                     <input
-                      {...register('password')}
+                      {...registerField('password')}
                       id="password"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       className={`w-full bg-slate-50 border ${
                         errors.password ? 'border-red-500' : 'border-slate-200'
-                      } rounded-2xl py-4 pl-12 pr-4 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
+                      } rounded-2xl py-4 pl-12 pr-12 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
                       placeholder="••••••••"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    >
+                      {showPassword ? <X className="w-4 h-4" /> : <Lock className="w-4 h-4" />}
+                    </button>
                   </div>
                   {errors.password && (
                     <p className="mt-2 text-xs text-red-500 font-bold ml-1">{errors.password.message}</p>
@@ -127,8 +157,8 @@ const Register: React.FC = () => {
                   <div className="relative group">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-blue-600 transition-all" />
                     <input
-                      {...register('confirmPassword')}
-                      type="password"
+                      {...registerField('confirmPassword')}
+                      type={showPassword ? "text" : "password"}
                       className={`w-full bg-slate-50 border ${
                         errors.confirmPassword ? 'border-red-500' : 'border-slate-200'
                       } rounded-2xl py-4 pl-12 pr-4 text-slate-900 font-medium focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 transition-all`}
@@ -149,7 +179,7 @@ const Register: React.FC = () => {
                       ? 'bg-blue-50 border-blue-500 ring-4 ring-blue-500/5' 
                       : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
                   }`}>
-                    <input type="radio" value="user" {...register('role')} className="hidden" />
+                    <input type="radio" value="user" {...registerField('role')} className="hidden" />
                     <UserIcon className={`w-5 h-5 mb-1.5 ${selectedRole === 'user' ? 'text-blue-600' : 'text-slate-400'}`} />
                     <span className={`text-[10px] font-black uppercase tracking-widest ${selectedRole === 'user' ? 'text-blue-600' : 'text-slate-500'}`}>User</span>
                   </label>
@@ -158,7 +188,7 @@ const Register: React.FC = () => {
                       ? 'bg-amber-50 border-amber-500 ring-4 ring-amber-500/5' 
                       : 'bg-white border-slate-200 text-slate-400 hover:border-slate-300'
                   }`}>
-                    <input type="radio" value="admin" {...register('role')} className="hidden" />
+                    <input type="radio" value="admin" {...registerField('role')} className="hidden" />
                     <Shield className={`w-5 h-5 mb-1.5 ${selectedRole === 'admin' ? 'text-amber-600' : 'text-slate-400'}`} />
                     <span className={`text-[10px] font-black uppercase tracking-widest ${selectedRole === 'admin' ? 'text-amber-600' : 'text-slate-500'}`}>Administrator</span>
                   </label>

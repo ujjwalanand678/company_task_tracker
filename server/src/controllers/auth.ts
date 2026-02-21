@@ -4,6 +4,7 @@ import { hashPassword, comparePassword, generateToken } from '../utils/auth';
 import { z } from 'zod';
 
 const registerSchema = z.object({
+    name: z.string().min(1, 'Name is required'),
     email: z.string().email(),
     password: z.string().min(6),
     role: z.enum(['admin', 'user']).optional()
@@ -16,7 +17,7 @@ const loginSchema = z.object({
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const { email, password, role } = registerSchema.parse(req.body);
+        const { name, email, password, role } = registerSchema.parse(req.body);
 
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
@@ -26,6 +27,7 @@ export const register = async (req: Request, res: Response) => {
         const hashedPassword = await hashPassword(password);
         const user = await prisma.user.create({
             data: {
+                name,
                 email,
                 password: hashedPassword,
                 role: role || 'user'
@@ -34,7 +36,7 @@ export const register = async (req: Request, res: Response) => {
 
         res.status(201).json({
             message: 'User registered successfully',
-            user: { id: user.id, email: user.email, role: user.role }
+            user: { id: user.id, name: user.name, email: user.email, role: user.role }
         });
     } catch (error: any) {
         if (error instanceof z.ZodError) {
@@ -63,7 +65,7 @@ export const login = async (req: Request, res: Response) => {
         res.json({
             message: 'Login successful',
             token,
-            user: { id: user.id, email: user.email, role: user.role }
+            user: { id: user.id, name: user.name, email: user.email, role: user.role }
         });
     } catch (error: any) {
         if (error instanceof z.ZodError) {
