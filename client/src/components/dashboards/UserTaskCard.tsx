@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import type { Task } from '../../types';
-import { Clock, CheckCircle2, User as UserIcon } from 'lucide-react';
+import { Clock, CheckCircle2 } from 'lucide-react';
 
 interface UserTaskCardProps {
   task: Task;
@@ -56,14 +56,12 @@ const UserTaskCard: React.FC<UserTaskCardProps> = ({ task, onStatusToggle, onVie
 
       <div className="flex items-center gap-8 w-full md:w-auto shrink-0 border-t md:border-t-0 md:border-l border-slate-100 pt-4 md:pt-0 md:pl-6">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-2xl bg-primary-600/10 flex items-center justify-center text-primary-500 border border-primary-500/10 shadow-inner">
-            <UserIcon className="w-5 h-5" />
-          </div>
           <div className="flex flex-col">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1.5">Assigned By</span>
-            <span className="text-sm font-black text-slate-900 uppercase leading-none truncate max-w-[160px]">
-              {(task.creator?.name && task.creator.name !== 'User') ? task.creator.name : task.creator?.email?.split('@')[0] || 'Administrator'}
+            <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] leading-none mb-1">Assigned By</span>
+            <span className="text-sm font-black text-slate-900 leading-none truncate max-w-[160px] mb-1">
+              {(task.creator?.name && task.creator.name.trim() !== '' && task.creator.name !== 'User') ? task.creator.name : (task.creator as any)?.email?.split('@')[0] || 'Administrator'}
             </span>
+            <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest leading-none">Administrator</span>
           </div>
         </div>
 

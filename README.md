@@ -40,6 +40,16 @@ TaskFlow follows a **Production-Level Glassmorphism** design system:
 
 ---
 
+## 🧠 Development Approach
+
+This project was developed through a modern AI-assisted workflow, demonstrating effective human-AI collaboration in software engineering:
+
+- **AI Pair Programming**: Built securely and efficiently using **Google Antigravity** as the primary coding and architectural assistant.
+- **Iterative Prompting**: The platform was constructed iteratively by providing clear, tactical prompts to guide the AI through complex features, aesthetic refinements, and state management.
+- **Human Oversight**: While the AI handled feature scaffolding and structural heavy lifting, logical edge cases, critical bug fixes, and architectural decisions were refined through direct manual intervention to ensure robust, production-level code.
+
+---
+
 ## 🛠️ Technical Architecture
 
 ### Frontend (Client)
